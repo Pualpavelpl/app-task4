@@ -7,7 +7,7 @@ import { VerifyEmailPage } from "../pages/VerifyEmailPage";
 export const AppRouter = () => {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/" element={<Navigate to="/register" replace />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/users" element={<UsersPage />} />
