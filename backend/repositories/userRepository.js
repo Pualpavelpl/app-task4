@@ -115,8 +115,7 @@ export const verifyUserEmailByToken = async (token) => {
       email_status = 'active',
       verification_token = NULL,
       verification_token_expires_at = NULL
-    WHERE verification_token = $1
-      AND verification_token_expires_at > NOW()
+      WHERE verification_token = $1
     RETURNING id, name, email, email_status, is_blocked
   `;
 

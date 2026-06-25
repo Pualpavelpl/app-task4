@@ -83,8 +83,10 @@ export const verifyEmailByToken = async (token) => {
     throw new AppError("Invalid or expired verification token", 400);
   }
 
+  const jwtToken = generateToken(user.id);
+
   return {
-    token,
+    token: jwtToken,
     user
   };
 };

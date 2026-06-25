@@ -24,19 +24,22 @@ export const VerifyEmailPage = () => {
   
         setMessage("Email verified successfully");
   
-     
+       
         localStorage.setItem("token", res.data.token);
   
        
-        setTimeout(() => {
-          navigate("/users");
-        }, 800);
+        navigate("/users");
   
       } catch (error) {
         setMessage(
           error.response?.data?.message ||
           "Email verification failed"
         );
+  
+        
+        setTimeout(() => {
+          navigate("/login");
+        }, 1500);
       }
     };
   
