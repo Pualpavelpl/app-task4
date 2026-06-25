@@ -17,7 +17,13 @@ app.use(
     origin: function (origin, callback) {
       if (!origin) return callback(null, true);
 
+      // разрешаем production
       if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      // 🔥 разрешаем ВСЕ preview vercel деплои
+      if (origin.endsWith(".vercel.app")) {
         return callback(null, true);
       }
 
