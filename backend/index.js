@@ -9,29 +9,17 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://app-task4.vercel.app"
+  "https://app-task4.vercel.app",
 ];
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true);
+app.use(cors({
+  origin: ["http://localhost:5173", "https://app-task4.vercel.app"],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
 
-      // разрешаем production
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
 
-      // 🔥 разрешаем ВСЕ preview vercel деплои
-      if (origin.endsWith(".vercel.app")) {
-        return callback(null, true);
-      }
-
-      return callback(new Error("Not allowed by CORS"));
-    },
-    credentials: true,
-  })
-);
 
 app.use(express.json());
 
