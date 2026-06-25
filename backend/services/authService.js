@@ -31,11 +31,13 @@ export const registerUser = async ({ name, email, password }) => {
     verificationTokenExpiresAt,
   });
 
-  return {
-    user,
-    verificationLink:
-    `${process.env.APP_URL}/api/auth/verify-email?token=${verificationToken}`,
-  };
+  const token = generateToken(user.id);
+
+return {
+  token,
+  user,
+  verificationLink: `${process.env.CLIENT_URL}/verify-email?token=${verificationToken}`,
+};
 };
 
 export const loginUser = async ({ email, password }) => {
