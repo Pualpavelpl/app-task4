@@ -18,16 +18,10 @@ export const VerifyEmailPage = () => {
   
     const verifyEmail = async () => {
       try {
-        const res = await api.get(
-          `/auth/verify-email?token=${token}`
-        );
-  
-        setMessage("Email verified successfully");
-  
-       
+        const res = await api.get(`/auth/verify-email?token=${token}`);
+
         localStorage.setItem("token", res.data.token);
-  
-       
+        
         navigate("/users");
   
       } catch (error) {

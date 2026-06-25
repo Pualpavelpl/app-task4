@@ -73,16 +73,13 @@ export const loginUser = async ({ email, password }) => {
   };
 };
 export const verifyEmailByToken = async (token) => {
-  if (!token) {
-    throw new AppError("Verification token is required", 400);
-  }
-
   const user = await verifyUserEmailByToken(token);
 
   if (!user) {
-    throw new AppError("Invalid or expired verification token", 400);
+    throw new AppError("Invalid token", 400);
   }
 
+  
   const jwtToken = generateToken(user.id);
 
   return {
