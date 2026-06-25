@@ -1,36 +1,48 @@
 import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { api } from "../api/httpClient";
 
 export const VerifyEmailPage = () => {
   const [searchParams] = useSearchParams();
-  const [message, setMessage] = useState("Confirming email...");
+  const navigate = useNavigate();
+
+  const [message, setMessage] = useState("Verifying email...");
 
   useEffect(() => {
     const token = searchParams.get("token");
 
-    api
-      .get(`/auth/verify-email?token=${token}`)
-      .then(() => {
-        setMessage("Email verified successfully.");
-      })
-      .catch((error) => {
+    if (!token) {
+      setMessage("Invalid verification link");
+      return;
+    }
+
+    const verifyEmail = async () => {
+      try {
+        await api.get(`/auth/verify-email?token=${token}`);
+
+        setMessage("Email verified successfully");
+
+        // после успеха кидаем на login (или users)
+        setTimeout(() => {
+          navigate("/login");
+        }, 1500);
+
+      } catch (error) {
         setMessage(
           error.response?.data?.message ||
-            "Failed to verify email."
+          "Email verification failed"
         );
-      });
-  }, [searchParams]);
+      }
+    };
+
+    verifyEmail();
+  }, [searchParams, navigate]);
 
   return (
     <div className="container min-vh-100 d-flex align-items-center justify-content-center">
-      <div className="card shadow-sm p-4 text-center" style={{ width: "420px" }}>
-        <h2>Email confirmation</h2>
+      <div className="card p-4 text-center" style={{ width: "420px" }}>
+        <h2>Email Verification</h2>
         <p className="text-muted">{message}</p>
-
-        <Link className="btn btn-primary" to="/users">
-          Go to users
-        </Link>
       </div>
     </div>
   );
