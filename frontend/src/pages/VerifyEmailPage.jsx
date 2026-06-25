@@ -10,23 +10,28 @@ export const VerifyEmailPage = () => {
 
   useEffect(() => {
     const token = searchParams.get("token");
-
+  
     if (!token) {
       setMessage("Invalid verification link");
       return;
     }
-
+  
     const verifyEmail = async () => {
       try {
-        await api.get(`/auth/verify-email?token=${token}`);
-
+        const res = await api.get(
+          `/auth/verify-email?token=${token}`
+        );
+  
         setMessage("Email verified successfully");
-
-        // после успеха кидаем на login (или users)
+  
+     
+        localStorage.setItem("token", res.data.token);
+  
+       
         setTimeout(() => {
-          navigate("/login");
-        }, 1500);
-
+          navigate("/users");
+        }, 800);
+  
       } catch (error) {
         setMessage(
           error.response?.data?.message ||
@@ -34,7 +39,7 @@ export const VerifyEmailPage = () => {
         );
       }
     };
-
+  
     verifyEmail();
   }, [searchParams, navigate]);
 

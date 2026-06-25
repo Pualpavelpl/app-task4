@@ -18,6 +18,8 @@ import {
 } from "../utils/verificationToken.js";
 
 import { AppError } from "../utils/AppError.js";
+
+
 export const registerUser = async ({ name, email, password }) => {
   const passwordHash = await hashPassword(password);
   const verificationToken = createVerificationToken();
@@ -81,5 +83,8 @@ export const verifyEmailByToken = async (token) => {
     throw new AppError("Invalid or expired verification token", 400);
   }
 
-  return user;
+  return {
+    token,
+    user
+  };
 };
