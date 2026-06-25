@@ -12,12 +12,12 @@ const allowedOrigins = [
   "https://app-task4.vercel.app",
 ];
 
-app.use(cors({
-  origin: true,
-  credentials: true
-}));
-
-
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 
