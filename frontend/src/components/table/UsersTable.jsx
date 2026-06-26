@@ -1,5 +1,18 @@
 import { getUserStatus } from "../../utils/getUserStatus";
 
+const formatDate = (date) => {
+  if (!date) {
+    return "Never";
+  }
+
+  return new Date(date).toLocaleString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
 
 export const UsersTable = ({
   users,
@@ -65,7 +78,7 @@ export const UsersTable = ({
 
                 <td>{status}</td>
 
-                <td>{user.last_login_at || "Never"}</td>
+                <td>{formatDate(user.last_login_at)}</td>
               </tr>
             );
           })}

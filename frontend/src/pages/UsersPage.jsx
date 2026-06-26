@@ -205,8 +205,7 @@ export const UsersPage = () => {
     );
   });
   
-  console.log("FILTER:", filterText);
-  console.log("FILTERED USERS:", filteredUsers);
+
 
   
   return (
